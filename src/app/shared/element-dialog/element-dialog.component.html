@@ -1,0 +1,56 @@
+<h1 *ngIf="!isChange" mat-dialog-title>Criação Cliente</h1>
+<h1 *ngIf="isChange" mat-dialog-title>Edição Cliente</h1>
+
+<div mat-dialog-content>
+
+  <mat-form-field>
+    <mat-label>Nome</mat-label>
+    <input type="text" class="form-control" id="nome" minlength="2" required #nome="ngModel"
+    [(ngModel)]="data.nome" name="nome"> 
+    
+    <div *ngIf="nome.invalid && (nome.dirty || nome.touched)">
+      <div *ngIf="nome.errors.required"> A Idade é obrigatória. </div>
+
+
+        
+   
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>SobreNome</mat-label>
+    <input matInput [(ngModel)]="data.sobreNome">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Nacionalidade</mat-label>
+    <input matInput [(ngModel)]="data.nacionalidade">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cep</mat-label>
+    <input matInput [(ngModel)]="data.cep">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Estado</mat-label>
+    <input matInput [(ngModel)]="data.estado">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cidade</mat-label>
+    <input matInput [(ngModel)]="data.cidade">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Logradouro</mat-label>
+    <input matInput [(ngModel)]="data.logradouro">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="data.email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Telefone</mat-label>
+    <input matInput [(ngModel)]="data.telefone">
+  </mat-form-field>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancelar</button>
+  <button mat-button *ngIf="!isChange" [mat-dialog-close]="data" cdkFocusInitial>Criação</button>
+  <button mat-button *ngIf="isChange" [mat-dialog-close]="data" cdkFocusInitial>Alterar</button>
+</div>
