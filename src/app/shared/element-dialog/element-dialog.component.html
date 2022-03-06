@@ -15,6 +15,12 @@
     <input matInput [(ngModel)]="data.sobreNome" formControlName="sobreNome">
     <mat-error *ngIf="checkError('nome', 'required')">O SobreNome é obrigatório</mat-error>
 
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Cpf</mat-label>
+    <input matInput [(ngModel)]="data.cpf" formControlName="cpf" mask="000000000-00">
+    <mat-error *ngIf="checkError('cpf', 'required')">O cpf é obrigatório</mat-error>
+
   </mat-form-field>      
   <mat-form-field>
     <mat-label>Nacionalidade</mat-label>
@@ -48,7 +54,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="data.email" formControlName="email">
+    <input matInput [(ngModel)]="data.email" required email formControlName="email">
     <mat-error *ngIf="checkError('email', 'required')">Email é obrigatório</mat-error>
 
   </mat-form-field>

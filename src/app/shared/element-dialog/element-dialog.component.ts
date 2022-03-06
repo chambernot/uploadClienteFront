@@ -54,7 +54,7 @@ constructor(
 
 
     this.clienteFormGroup = new FormGroup({
-      nome : new FormControl('nome', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
+      nome : new FormControl('nome', [Validators.required, Validators.minLength(2), Validators.maxLength(20)]),
       sobreNome : new FormControl ('sobreNome', [Validators.required, Validators.maxLength(200)]),
       nacionalidade : new FormControl ('nacionalidade', [Validators.required, Validators.maxLength(20)]),
       cep : new FormControl ('cep', [Validators.required, Validators.maxLength(8)]),
@@ -62,8 +62,8 @@ constructor(
       cidade : new FormControl ('cidade', [Validators.required, Validators.maxLength(100)]),
       logradouro : new FormControl ('logradouro', [Validators.required, Validators.maxLength(200)]),
       email : new FormControl ('email', [Validators.required, Validators.maxLength(200)]),
-      telefone : new FormControl ('telefone', [Validators.required, Validators.maxLength(30)])
-
+      telefone : new FormControl ('telefone', [Validators.required, Validators.maxLength(30)]),
+      cpf : new FormControl ('cpf', [Validators.required, Validators.maxLength(11)])
     });
 
     console.log(this.clienteFormGroup.valid)

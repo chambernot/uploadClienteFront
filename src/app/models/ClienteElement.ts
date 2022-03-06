@@ -4,6 +4,7 @@ export interface ClienteElement {
      sobreNome: string;
      nacionalidade: string;
      cep: string;
+     cpf:string;
      estado: string;
      cidade: string;
      logradouro: string;

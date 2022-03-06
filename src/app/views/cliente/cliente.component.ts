@@ -56,7 +56,8 @@ export class ClienteComponent implements OnInit {
         cidade:'',
         logradouro:'',
         email:'',
-        telefone:''
+        telefone:'',
+        cpf:''
 
       }:{
         id:element.id,
@@ -68,7 +69,8 @@ export class ClienteComponent implements OnInit {
         cidade:element.cidade,
         logradouro:element.logradouro,
         email:element.email,
-        telefone:element.telefone
+        telefone:element.telefone,
+        cpf:element.cpf
 
       }
     });
@@ -80,9 +82,9 @@ export class ClienteComponent implements OnInit {
       if(this.dataSource.map(p=>p.id).includes(result.id))
       {
           this.periodicElementService.alterCliente(result)
-          .subscribe(()=>{
-
-            this.dataSource[result.id - 1]= result;
+          .subscribe((data: ClienteElement)=>{
+console.log(data);
+           this.dataSource[result.id - 1]= data;
            this.table.renderRows();
 
           });
@@ -90,12 +92,22 @@ export class ClienteComponent implements OnInit {
 
       }else
       {
-        console.log("Passou aqui");
         this.periodicElementService.createCliente(result)
-        .subscribe();
-        this.dataSource.push(result);
-          this.table.renderRows();
 
+        .subscribe((data: ClienteElement) =>
+        {
+          if  (data.id !=undefined){
+
+            this.dataSource.push(data);
+            this.table.renderRows();
+      
+          }else {
+            console.log("cpf já existe na base");
+
+          }
+          
+        });
+        
       }
       
 
