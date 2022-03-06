@@ -1,7 +1,7 @@
 import { Component,Inject, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ClienteElement } from 'src/app/models/ClienteElement';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { CepService } from 'src/app/services/cep.service';
 import { CepElement } from 'src/app/models/CepElement';
 
@@ -16,22 +16,6 @@ element!: ClienteElement;
 cep!: CepElement;
 isChange!:boolean;
 public clienteFormGroup!: FormGroup;
-
-getFormGroupClass(isValid : boolean, isPristine: boolean) : {} {
-  return {
-      'form-group' : true,
-      'has-danger': !isValid && !isPristine,
-      'has-success': isValid && !isPristine
-  };
-}
-
-getFormControlClass(isValid : boolean, isPristine: boolean) : {} {
-  return {
-      'form-control' : true,
-      'has-danger': !isValid && !isPristine,
-      'has-success': isValid && !isPristine
-  };
-}
 
 
 constructor(
@@ -73,6 +57,8 @@ constructor(
     return this.clienteFormGroup.controls[controlName].hasError(errorName);
   }
 
+  
+
   getcep(){
 
     this.cepService.getCep(this.element.cep).subscribe((cepretorno:CepElement)=>{
@@ -93,7 +79,7 @@ constructor(
       this.data.cidade=cepretorno.localidade;
       this.data.estado = cepretorno.uf;
       this.data.logradouro = cepretorno.logradouro;
-      console.log(cepretorno);
+      
     });
  
  }
@@ -105,4 +91,55 @@ constructor(
 
   }
 
+   isValidCpf() {
+     
+    return (control: AbstractControl): Validators => {
+      console.log(control.value);
+      const cpf = control.value;
+      if (cpf) {
+        let numbers, digits, sum, i, result, equalDigits;
+        equalDigits = 1;
+        if (cpf.length < 11) {
+         return false;
+        }
+
+        for (i = 0; i < cpf.length - 1; i++) {
+          if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
+            equalDigits = 0;
+            break;
+          }
+        }
+
+        if (!equalDigits) {
+          numbers = cpf.substring(0, 9);
+          digits = cpf.substring(9);
+          sum = 0;
+          for (i = 10; i > 1; i--) {
+            sum += numbers.charAt(10 - i) * i;
+          }
+
+          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+          if (result !== Number(digits.charAt(0))) {
+            return { cpfNotValid: true };
+          }
+          numbers = cpf.substring(0, 10);
+          sum = 0;
+
+          for (i = 11; i > 1; i--) {
+            sum += numbers.charAt(11 - i) * i;
+          }
+          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
+
+          if (result !== Number(digits.charAt(1))) {
+            return { cpfNotValid: true };
+          }
+          return false;
+        } else {
+          return { cpfNotValid: true };
+        }
+     }
+   return false;
+ };
+  }
 }

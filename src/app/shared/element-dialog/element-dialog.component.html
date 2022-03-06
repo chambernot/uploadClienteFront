@@ -21,6 +21,8 @@
     <input matInput [(ngModel)]="data.cpf" formControlName="cpf" mask="000000000-00">
     <mat-error *ngIf="checkError('cpf', 'required')">O cpf é obrigatório</mat-error>
 
+    <mat-error *ngIf="isValidCpf()">O cpf é invalido</mat-error>
+
   </mat-form-field>      
   <mat-form-field>
     <mat-label>Nacionalidade</mat-label>
