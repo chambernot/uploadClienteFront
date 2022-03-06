@@ -2,14 +2,18 @@ import { Component,Inject, OnInit } from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ClienteElement } from 'src/app/models/ClienteElement';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CepService } from 'src/app/services/cep.service';
+import { CepElement } from 'src/app/models/CepElement';
 
 @Component({
   selector: 'app-element-dialog',
   templateUrl: './element-dialog.component.html',
-  styleUrls: ['./element-dialog.component.css']
+  styleUrls: ['./element-dialog.component.css'],
+  providers:[CepService]
 })
 export class ElementDialogComponent implements OnInit {
 element!: ClienteElement;
+cep!: CepElement;
 isChange!:boolean;
 public clienteFormGroup!: FormGroup;
 
@@ -34,7 +38,10 @@ constructor(
   @Inject(MAT_DIALOG_DATA) 
   public data: ClienteElement,
   public dialogRef: MatDialogRef<ElementDialogComponent>,
+  public cepService:CepService,
   ) {}
+
+  
 
   ngOnInit(): void {
     if(this.data.id != "")
@@ -44,7 +51,7 @@ constructor(
       this.isChange = false;
 
     }
-    
+
 
     this.clienteFormGroup = new FormGroup({
       nome : new FormControl('nome', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
@@ -66,7 +73,32 @@ constructor(
     return this.clienteFormGroup.controls[controlName].hasError(errorName);
   }
 
+  getcep(){
 
+    this.cepService.getCep(this.element.cep).subscribe((cepretorno:CepElement)=>{
+      this.data.cep=cepretorno.cep;
+      this.data.cidade=cepretorno.localidade;
+      this.data.estado = cepretorno.uf;
+      this.data.logradouro = cepretorno.logradouro;
+      console.log(cepretorno);
+    });
+
+    
+  }
+
+  onBlurEvent(event: any){
+
+    this.cepService.getCep(event.target.value).subscribe((cepretorno:CepElement)=>{
+      this.data.cep=cepretorno.cep;
+      this.data.cidade=cepretorno.localidade;
+      this.data.estado = cepretorno.uf;
+      this.data.logradouro = cepretorno.logradouro;
+      console.log(cepretorno);
+    });
+ 
+ }
+ 
+ 
   onCancel(): void {
     this.dialogRef.close();
 

@@ -24,7 +24,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>Cep</mat-label>
-    <input matInput [(ngModel)]="data.cep" formControlName="nacionalidade" mask="00000-000">
+    <input matInput (blur)="onBlurEvent($event)"  [(ngModel)]="data.cep" formControlName="nacionalidade" mask="00000-000">
     <mat-error *ngIf="checkError('cep', 'required')">Cep é obrigatório</mat-error>
 
   </mat-form-field>
