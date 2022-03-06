@@ -49,7 +49,7 @@ export class ClienteComponent implements OnInit {
       data: element===null?{
         id:'',
         nome:'',
-        sobrenome:'',
+        sobreNome:'',
         nacionalidade:'',
         cep:'',
         estado:'',
@@ -61,7 +61,7 @@ export class ClienteComponent implements OnInit {
       }:{
         id:element.id,
         nome:element.nome,
-        sobrenome:element.sobreNome,
+        sobreNome:element.sobreNome,
         nacionalidade:element.nacionalidade,
         cep:element.cep,
         estado:element.estado,

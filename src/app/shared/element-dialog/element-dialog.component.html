@@ -1,48 +1,70 @@
 <h1 *ngIf="!isChange" mat-dialog-title>Criação Cliente</h1>
 <h1 *ngIf="isChange" mat-dialog-title>Edição Cliente</h1>
-
 <div mat-dialog-content>
+  <form [formGroup]="clienteFormGroup" class="example-form">
 
-  <mat-form-field>
+    <mat-form-field aspect="outline" class="example-full-width">
+
     <mat-label>Nome</mat-label>
-    <input  matInput [(ngModel)]="data.nome" #ctrl="ngModel" required name="nome">
+    <input  matInput [(ngModel)]="data.nome" formControlName="nome" >
+    <mat-error *ngIf="checkError('nome', 'required')">O nome é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>SobreNome</mat-label>
-    <input matInput [(ngModel)]="data.sobreNome">
+    <input matInput [(ngModel)]="data.sobreNome" formControlName="sobreNome">
+    <mat-error *ngIf="checkError('nome', 'required')">O SobreNome é obrigatório</mat-error>
+
   </mat-form-field>      
   <mat-form-field>
     <mat-label>Nacionalidade</mat-label>
-    <input matInput [(ngModel)]="data.nacionalidade">
+    <input matInput [(ngModel)]="data.nacionalidade" formControlName="nacionalidade">
+    <mat-error *ngIf="checkError('nacionalidade', 'required')">Nacionalidade é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Cep</mat-label>
-    <input matInput [(ngModel)]="data.cep">
+    <input matInput [(ngModel)]="data.cep" formControlName="nacionalidade" mask="00000-000">
+    <mat-error *ngIf="checkError('cep', 'required')">Cep é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Estado</mat-label>
-    <input matInput [(ngModel)]="data.estado">
+    <input matInput [(ngModel)]="data.estado" formControlName="estado"> 
+    <mat-error *ngIf="checkError('estado', 'required')">Estado é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Cidade</mat-label>
-    <input matInput [(ngModel)]="data.cidade">
+    <input matInput [(ngModel)]="data.cidade" formControlName="cidade">
+    <mat-error *ngIf="checkError('cidade', 'required')">Cidade é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Logradouro</mat-label>
-    <input matInput [(ngModel)]="data.logradouro">
+    <input matInput [(ngModel)]="data.logradouro" formControlName="logradouro">
+    <mat-error *ngIf="checkError('logradouro', 'required')">Logradouro é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="data.email">
+    <input matInput [(ngModel)]="data.email" formControlName="email">
+    <mat-error *ngIf="checkError('email', 'required')">Email é obrigatório</mat-error>
+
   </mat-form-field>
   <mat-form-field>
     <mat-label>Telefone</mat-label>
-    <input matInput [(ngModel)]="data.telefone">
+    <input matInput [(ngModel)]="data.telefone" formControlName="telefone" 
+     mask="(00) 00000-0000">
+    <mat-error *ngIf="checkError('telefone', 'required')">Telefone é obrigatório</mat-error>
+
   </mat-form-field>
   
+  </form>
 </div>
+
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancelar</button>
-  <button mat-button *ngIf="!isChange" [mat-dialog-close]="data" cdkFocusInitial>Criação</button>
-  <button mat-button *ngIf="isChange" [mat-dialog-close]="data" cdkFocusInitial>Alterar</button>
+  <button mat-button *ngIf="!isChange" [mat-dialog-close]="data" [disabled]="!clienteFormGroup.valid" cdkFocusInitial>Criação</button>
+  <button mat-button *ngIf="isChange" [mat-dialog-close]="data" [disabled]="!clienteFormGroup.valid" cdkFocusInitial>Alterar</button>
 </div>
